@@ -19,10 +19,18 @@ int main()
 	Cola<string> E;
 	Cola<string> F;
 	
+	struct cola q;
+	
+	q.delante = NULL;
+	q.atras   = NULL;
+	
+	struct cola p;
+	
+	p.delante = NULL;
+	p.atras   = NULL;
+	
 	/************* Menu ***********/
-	bool flag = false;
-	char tecla;
-	char answer[2];
+	
 	
 	fstream ficheroEntrada;
 	string nombre="Datos.txt";
@@ -58,26 +66,32 @@ int main()
 				char *ptr1;
 				ptr1 = strtok(frase1,"/");
 				int a = 0;
+				string g;
+				string b;
+				string c;
+				string d;
+				string e;
+				string f;
 				while(ptr1 != NULL)
 				{
 					string dato = string(ptr1);
 					if(a==0){
-						A.insertar(dato);
+						g=dato;
 					}
 					if(a==1){
-						B.insertar(dato);
+						b=dato;
 					}
 					if(a==2){
-						C.insertar(dato);
+						c=dato;
 					}
 					if(a==3){
-						D.insertar(dato);
+						d=dato;
 					}
 					if(a==4){
-						E.insertar(dato);
+						e=dato;
 					}
 					if(a==5){
-						F.insertar(dato);
+						f=dato;
 					}
 					//cout<<dato<<endl;
 					//insertar(dato);
@@ -86,26 +100,19 @@ int main()
 					a++;
 				}
 				
+				A.encolar( q, g,b,d,e,f, c );
+				A.ordenarPrioridad(q);
+				
 			}
 			
 			ficheroEntrada.close();
 			
 		}
-		cout << "Listado de todos los ID." << endl;
-		A.imprimir();
-		cout << "Listado de todos los Estados." << endl;
-		B.imprimir();
-		cout << "Listado de todos las Prioridades." << endl;
-		C.imprimir();
-		cout << "Listado de todos las Instrcciones." << endl;
-		D.imprimir();
-		cout << "Listado de todos las Instrucciones de Bloqueo." << endl;
-		E.imprimir();
-		cout << "Listado de todos los Eventos." << endl;
-		F.imprimir();
+		A.muestraCola(q);
+		cout<<""<<endl;
 		//listar();
 	}else 
-							   cout << "Fichero inexistente o faltan permisos para abrirlo" << endl;
+	cout << "Fichero inexistente o faltan permisos para abrirlo" << endl;
 	
 	
 	
