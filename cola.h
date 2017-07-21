@@ -1,3 +1,4 @@
+
 #ifndef COLA_H_INCLUDED
 #define COLA_H_INCLUDED
 /*Practice No. 4: Queue */
@@ -6,6 +7,7 @@
 #include <conio.h>
 #include <stdio.h>
 #include <iostream>
+#include <string>
 using namespace std;
 
 template <typename T>
@@ -24,97 +26,18 @@ public:
 	Cola();
 	~Cola();
 	
-	void insertar(string x);
-	int extraer();
+	void insertar(int x);
+	int extraer(struct cola q);
 	void imprimir();
 	bool vacia();
 	void encolar( struct cola &q, string valor1,string valor2,string valor3,string valor4,string valor5, string priori  );
+	void modificar( struct cola &q, string valor1,string valor2,string valor3,string valor4,string valor5, string priori );
 	void muestraCola( struct cola q );
 	void ordenarPrioridad( struct cola &q );
 		
 };
 
 /*************Constructor,destructor********/
-template <typename T>
-Cola<T>::Cola()
-{
-	inicio = NULL;
-	fin = NULL;
-}
-
-template <typename T>
-Cola<T>::~Cola()
-{
-	Nodo* recorrido = inicio;
-	Nodo* bor;
-	while (recorrido != NULL) {
-		bor = recorrido;
-		recorrido = recorrido->siguiente;
-		delete bor;
-	}
-}
-
-/*************Métodos (Funciones)***********/
-template <typename T>
-void Cola<T>::insertar(string x)
-{ T y=x;
-	nuevo = new Nodo();
-	nuevo->dato = y;
-	nuevo->siguiente = NULL;
-	if (vacia()) {
-		inicio = nuevo;
-		fin = nuevo;
-	}
-	else {
-		fin->siguiente = nuevo;
-		fin = nuevo;
-	}
-}
-
-template <typename T>
-int Cola<T>::extraer()
-{
-	if (!vacia()) {
-		string informacion = inicio->dato;
-		Nodo* bor = inicio;
-		if (inicio == fin) {
-			inicio = NULL;
-			fin = NULL;
-		}
-		else {
-			inicio = inicio->siguiente;
-		}
-		cout << "Dato eliminado, ahora el dato a quitar  es:" << inicio->dato << endl;
-		delete bor;
-		//return informacion;
-	}
-	else {
-		cout << endl
-			<< "Empty Queue!!!" << endl;
-		//return -1;
-	}
-}
-
-template <typename T>
-void Cola<T>::imprimir()
-{
-	Nodo* recorrido = inicio;
-	
-	while (recorrido != NULL) {
-		cout  << recorrido->dato << endl;
-		recorrido = recorrido->siguiente;
-	}
-	cout << endl;
-}
-
-template <typename T>
-bool Cola<T>::vacia()
-{
-	if (inicio == NULL)
-		return true;
-	else
-		return false;
-}
 struct nodo
 {
 	string dato1;
@@ -147,6 +70,96 @@ struct nodo *crearNodo( string x,string y,string z,string w,string s, string pr)
 }
 
 template <typename T>
+Cola<T>::Cola()
+{
+	inicio = NULL;
+	fin = NULL;
+}
+
+template <typename T>
+Cola<T>::~Cola()
+{
+	Nodo* recorrido = inicio;
+	Nodo* bor;
+	while (recorrido != NULL) {
+		bor = recorrido;
+		recorrido = recorrido->siguiente;
+		delete bor;
+	}
+}
+
+/*************Métodos (Funciones)***********/
+template <typename T>
+void Cola<T>::insertar(int x)
+{  
+	nuevo = new Nodo();
+	nuevo->dato = x;
+	nuevo->siguiente = NULL;
+	if (vacia()) {
+		inicio = nuevo;
+		fin = nuevo;
+	}
+	else {
+		fin->siguiente = nuevo;
+		fin = nuevo;
+	}
+}
+
+template <typename T>
+int Cola<T>::extraer(struct cola q)
+	
+	
+{
+	struct nodo *aux;
+	
+	aux = q.delante;
+	
+	if (!vacia()) {
+		string informacion = aux;
+		Nodo* bor = q.delante;
+		if (q.delante ==0) {
+			q.delante = NULL;
+			q.atras = NULL;
+		}
+		else {
+			int x=q.delante->dato1;
+				
+			q.delante = x-1;
+		}
+		cout << "Dato eliminado, ahora el dato a quitar  es:" << q.delante->dato1 << endl;
+		
+		//return informacion;
+	}
+	else {
+		cout << endl
+			<< "Empty Queue!!!" << endl;
+		//return -1;
+	}
+}
+
+template <typename T>
+void Cola<T>::imprimir()
+{
+	Nodo* recorrido = inicio;
+	
+	while (recorrido != NULL) {
+		cout  << recorrido->dato << endl;
+		recorrido = recorrido->siguiente;
+	}
+	cout << endl;
+}
+
+template <typename T>
+bool Cola<T>::vacia()
+{
+	if (inicio == NULL)
+		return true;
+	else
+		return false;
+}
+
+
+template <typename T>
 void Cola<T>::encolar( struct cola &q, string valor1,string valor2,string valor3,string valor4,string valor5, string priori )
 {
 	
@@ -161,6 +174,29 @@ void Cola<T>::encolar( struct cola &q, string valor1,string valor2,string valor3
 	q.atras = aux;        // puntero que siempre apunta al ultimo elemento 
 }
 template <typename T>
+void Cola<T>::modificar( struct cola &q, string valor1,string valor2,string valor3,string valor4,string valor5, string priori )
+{
+	
+	struct nodo *aux1;
+	
+	
+	aux1 = q.delante;
+	while( aux1->sgte != NULL)
+	{
+	if(aux1->dato1==valor1){
+		aux1->priori = priori;
+		aux1->dato1 = valor1;
+		aux1->dato2  = valor2;
+		aux1->dato3 = valor3;
+		aux1->dato4 = valor4;
+		aux1->dato5  = valor5;
+	}
+	aux1 = aux1->sgte;
+	}
+	
+	 
+}
+template <typename T>
 void Cola<T>::muestraCola( struct cola q )
 {
 	
@@ -170,44 +206,102 @@ void Cola<T>::muestraCola( struct cola q )
 	Cola<string> F;
 	Cola<string> G;
 	Cola<string> H;
-	struct nodo *aux;
 	
-	aux = q.delante;
 	cout<<""<<endl;
-	cout<<  " Procesos Ordenados por prioridad"<<endl;
+	/*cout<<  " Procesos Ordenados por prioridad"<<endl;
 	cout << " Caracter   Estado   #Instrucciones   #Bloqueo   Evento  Prioridad " << endl;
 	cout << " ----------------------------------------------------------------- " << endl;
 	
 	while( aux != NULL )
 	{
 		cout<<"    "<< aux->dato1 << "     |   " << aux->dato2 << "     |   " << aux->dato3 << "     |   " << aux->dato4 << "     |   " << aux->dato5 << "     |   " << aux->priori <<    endl;
-		C.insertar(aux->dato1);
-		D.insertar(aux->dato2);
-		E.insertar(aux->dato3);
-		F.insertar(aux->dato4);
-		G.insertar(aux->dato5);
-		H.insertar(aux->priori);
+		
 		
 		aux = aux->sgte;
 		
 		
 		
-	}    
+	}    */
+	
+	int b,d,f,h,j,k,l=0,m=0,n=0,o=0,p=0,r,i;
+	cout<<"ingrese el numeo de ciclos"<<endl;
+	cin>>o;
+	struct nodo *aux;
+	
+	aux = q.delante;
+	
+		while(aux!=NULL){
+			string v=aux->priori;
+			string a=aux->dato1;
+			string c=aux->dato2;
+			string w=aux->dato5;
+			r=atoi(w.c_str());
+			string e=aux->dato4;
+			f=atoi(e.c_str());
+			string g=aux->dato3;
+			h=atoi(g.c_str());
+			n+=atoi(g.c_str());
+			
+		for(i=0;i<o;i++){
+				if(l<f){
+					l++;
+				}else{
+					p++;	
+				}
+				if(f==3&&p==13){
+					l+=p;
+				}
+				if(f==5&&p==27){
+					l+=p;
+				}
+		}	
+		int b=h-l;
+		string s=""+b;
+		int t=f-l;
+		string u=""+t;
+		modificar(q,a,c,s,u,e,v);
+			
+			
+			if(l<o){
+				aux = aux->sgte; 
+				if(aux==NULL){
+					aux=q.delante;
+				}	
+			}else{
+				aux = NULL;
+			}
+				
+			
+			
+		}
+		
+		
+	
+	k=l-i;
+	/*C.insertar(h);
+	D.insertar(j);
+	E.insertar(k);
+	F.insertar(l);
+	G.insertar(m);*/
 	
 	
 	
-	cout << "Listado de todos los ID." << endl;
-	C.imprimir();
-	cout << "Listado de todos los Estados." << endl;
-	D.imprimir();
-	cout << "Listado de todos las Prioridades." << endl;
-	H.imprimir();
-	cout << "Listado de todos las Instrcciones." << endl;
-	E.imprimir();
-	cout << "Listado de todos las Instrucciones de Bloqueo." << endl;
-	F.imprimir();
-	cout << "Listado de todos los Eventos." << endl;
-	G.imprimir();
+	
+	
+	
+	
+	cout << "NUEVO" << endl;
+	cout<<h<<endl;
+	
+	cout << "LISTO." << endl;
+	cout<<n<<endl;
+	cout << "EJECUTANDO." << endl;
+	cout<<l<<endl;
+	cout << "BLOQUEADO" << endl;
+	cout<<p<<endl;
+	cout << "SALIENTE" << endl;
+	cout<<k<<endl;
+	
 }
 
 template <typename T>

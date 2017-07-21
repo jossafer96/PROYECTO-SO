@@ -29,7 +29,7 @@ int main()
 	p.delante = NULL;
 	p.atras   = NULL;
 	
-	/************* Menu ***********/
+	
 	
 	
 	fstream ficheroEntrada;
@@ -108,6 +108,8 @@ int main()
 			ficheroEntrada.close();
 			
 		}
+		
+	
 		A.muestraCola(q);
 		cout<<""<<endl;
 		//listar();
